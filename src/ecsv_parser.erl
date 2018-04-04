@@ -25,7 +25,8 @@
 % - This parser doesn't allow a return (\n) in a field value!
 %
 
--export([init/1, init/2, parse_with_character/2, end_parsing/1]).
+-export([init/1, init/2, init_with_delimiter/3,
+	 parse_with_character/2, end_parsing/1]).
 
 -record(pstate, {
     state, % ready, in_quotes, skip_to_delimiter, eof
@@ -41,6 +42,10 @@
 %   in_quotes
 %   skip_to_delimiter
 %   eof
+
+
+init_with_delimiter(ProcessingFun, ProcessingFunInitState, Delimiter) ->
+    init(#ecsv_opts{delimiter = Delimiter}, ProcessingFun, ProcessingFunInitState).
 
 init(ProcessingFun) ->
     init(ProcessingFun, []).
